@@ -33,15 +33,6 @@ const Navbar: React.FC = () => {
           <span className="font-bold text-white text-[18px] tracking-[0.2em]">Dark Vault</span>
         </div>
 
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center">
-            <div className="w-8 h-8 bg-dark-black border-2 border-dark-green flex items-center justify-center rounded-sm glow-green">
-          <Shield className="w-6 h-6 text-dark-green" fill="currentColor" fillOpacity={0.1} />
-        </div
-          </div>
-          <span className="font-bold text-white text-[18px] tracking-[0.2em]">Dark Vault</span>
-        </div>
-
         {/* Navigation Links */}
         <div className="hidden md:flex items-center gap-8">
           <a href="#terminal" className="text-[12px] text-[#666] hover:text-white transition-colors">Darkvault</a>
