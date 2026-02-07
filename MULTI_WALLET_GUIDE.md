@@ -2,7 +2,7 @@
 
 ## ✅ Supported Wallets
 
-Your Private Alpha Vault now supports **multiple Solana wallets**:
+Your Darkvault now supports **multiple Solana wallets**:
 
 1. **Phantom** 👻 - Most popular Solana wallet
 2. **Solflare** 🌟 - Advanced Solana wallet
@@ -147,7 +147,7 @@ const wallets = detectAvailableWallets();
 
 ### Dynamic Connection
 
-The `VaultService` now supports any wallet provider:
+The `DarkvaultService` now supports any wallet provider:
 
 ```typescript
 // Old: Only Phantom

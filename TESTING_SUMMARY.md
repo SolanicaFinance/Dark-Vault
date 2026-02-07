@@ -195,7 +195,7 @@ Settings → Networks → Solana Devnet
 - `MULTI_WALLET_GUIDE.md` - Complete wallet guide
 
 ### Updated Files
-- `context/VaultContext.tsx` - Multi-wallet state management
+- `context/DarkvaultContext.tsx` - Multi-wallet state management
 - `services/vault.ts` - `connectWithProvider()` method
 - `App.tsx` - Wallet modal integration
 
@@ -241,7 +241,7 @@ interface WalletAdapter {
 ✓ Wallet address displayed (truncated)
 ✓ Network status: Devnet
 ✓ Encryption status: Ready
-✓ Vault status: Initialized
+✓ Darkvault status: Initialized
 ```
 
 ### After Deposit (1.0 SOL)
@@ -363,7 +363,7 @@ Transfers:
 Yield (Authority):
 □ Admin panel visible
 □ Yield distribution works
-□ Vault total increases
+□ Darkvault total increases
 □ User balances reflect yield
 
 Security:

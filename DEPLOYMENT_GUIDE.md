@@ -104,17 +104,17 @@ After upgrade:
    - `services/vault.ts` - Added transfer discriminator
 
 3. **Updated context**:
-   - `context/VaultContext.tsx` - Exposed `applyYield` and `transfer` methods
+   - `context/DarkvaultContext.tsx` - Exposed `applyYield` and `transfer` methods
 
 4. **Updated components**:
-   - `components/VaultTerminal.tsx` - Integrated AdminPanel and TransferPanel
+   - `components/DarkvaultTerminal.tsx` - Integrated AdminPanel and TransferPanel
    - `components/ActionSuite.tsx` - Added transfer tab with recipient input
 
 ---
 
 ## New UI Features
 
-### Admin Panel (Vault Authority Only)
+### Admin Panel (Darkvault Authority Only)
 ```
 ┌────────────────────────────────────────────┐
 │  🛡️  Admin Panel                           │
@@ -243,8 +243,8 @@ open http://localhost:3003
 
 ### Modified Files
 - `services/vault.ts` - Added `applyYield()` and `transfer()` methods
-- `context/VaultContext.tsx` - Exposed new methods in context
-- `components/VaultTerminal.tsx` - Integrated new panels
+- `context/DarkvaultContext.tsx` - Exposed new methods in context
+- `components/DarkvaultTerminal.tsx` - Integrated new panels
 - `components/ActionSuite.tsx` - Added transfer tab
 - `instructions/mod.rs` - Added transfer module
 - `lib.rs` - Added transfer function

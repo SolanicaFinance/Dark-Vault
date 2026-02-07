@@ -1,4 +1,4 @@
-# Private Alpha Vault - LLM Context File
+# Darkvault - LLM Context File
 
 > **Purpose**: This file provides comprehensive context for LLMs (Claude, GPT, etc.) to understand, modify, and extend this codebase. It documents architecture, key files, data flows, and implementation details.
 
@@ -6,7 +6,7 @@
 
 ## Project Overview
 
-**Private Alpha Vault** is a confidential yield vault built on Solana using Inco Lightning's Fully Homomorphic Encryption (FHE). Users can deposit and withdraw SOL while keeping their balances completely private on-chain.
+**Darkvault** is a confidential yield vault built on Solana using Inco Lightning's Fully Homomorphic Encryption (FHE). Users can deposit and withdraw SOL while keeping their balances completely private on-chain.
 
 ### Key Value Proposition
 - Balances are **encrypted on-chain** using FHE
@@ -35,7 +35,7 @@
 
 ```
 Program ID:        DmfUVqYJ5DG1iWww8YXt75zsB6RdmMws5qQMBWH4ofvC
-Vault PDA:         5SDA2ZsZ6Du2fhRw1UqgkHG4HwNwnCyeAPiMK4XDTerL
+Darkvault PDA:         5SDA2ZsZ6Du2fhRw1UqgkHG4HwNwnCyeAPiMK4XDTerL
 Inco Lightning:    5sjEbPiqgZrYwR31ahR6Uk9wf5awoX61YGg7jExQSwaj
 IDL Account:       64ZYpxfGvnAJp7oUMnWbjr5MHmVR95pkA1xRpchdRRFJ
 ```
@@ -54,7 +54,7 @@ private-alpha-vault (1)/
 ├── tsconfig.json                    # TypeScript config
 │
 ├── context/
-│   └── VaultContext.tsx             # React context for vault state
+│   └── DarkvaultContext.tsx             # React context for vault state
 │
 ├── services/
 │   └── vault.ts                     # Solana + Inco SDK integration
@@ -62,7 +62,7 @@ private-alpha-vault (1)/
 ├── components/
 │   ├── Navbar.tsx                   # Navigation bar
 │   ├── Hero.tsx                     # Landing section
-│   ├── VaultTerminal.tsx            # Main vault dashboard
+│   ├── DarkvaultTerminal.tsx            # Main vault dashboard
 │   ├── ActionSuite.tsx              # Deposit/withdraw panel
 │   ├── StatusMonitor.tsx            # Activity log
 │   ├── PrivateValue.tsx             # Encrypted value display
@@ -88,7 +88,7 @@ private-alpha-vault (1)/
     │           ├── errors.rs        # Custom errors
     │           ├── state/
     │           │   ├── mod.rs
-    │           │   ├── vault.rs     # Vault account struct
+    │           │   ├── vault.rs     # Darkvault account struct
     │           │   └── user_position.rs  # User position struct
     │           └── instructions/
     │               ├── mod.rs
@@ -111,10 +111,10 @@ private-alpha-vault (1)/
 
 ## Core Data Structures
 
-### Vault Account (On-Chain)
+### Darkvault Account (On-Chain)
 ```rust
 // programs/private_alpha_vault/src/state/vault.rs
-pub struct Vault {
+pub struct Darkvault {
     pub authority: Pubkey,              // Can apply yield
     pub total_encrypted_balance: Euint128,  // FHE handle (16 bytes)
     pub bump: u8,                       // PDA bump seed
@@ -259,7 +259,7 @@ const DISCRIMINATORS = {
 ## PDA Derivations
 
 ```typescript
-// Vault PDA
+// Darkvault PDA
 const [vaultPda] = PublicKey.findProgramAddressSync(
   [Buffer.from('vault')],
   PROGRAM_ID
@@ -312,7 +312,7 @@ const [allowancePda] = PublicKey.findProgramAddressSync(
 
 ### services/vault.ts
 ```typescript
-class VaultService {
+class DarkvaultService {
   // Connection to Solana
   private connection = new Connection(RPC_ENDPOINT, 'confirmed');
   
@@ -325,7 +325,7 @@ class VaultService {
   async disconnect(): Promise<void>
   async deposit(amount: number): Promise<string>      // Returns tx signature
   async withdraw(amount: number): Promise<string>     // Returns tx signature
-  async fetchVaultState(): Promise<VaultMetadataSummary>
+  async fetchDarkvaultState(): Promise<DarkvaultMetadataSummary>
   async fetchUserPositionHandle(): Promise<string>
   async decryptBalance(handle: string): Promise<DecryptedBalance>
   
@@ -337,11 +337,11 @@ class VaultService {
 }
 ```
 
-### context/VaultContext.tsx
+### context/DarkvaultContext.tsx
 ```typescript
-interface VaultState {
+interface DarkvaultState {
   wallet: { address: string | null; status: WalletStatus }
-  vault: { status: VaultStatus; metadata: VaultMetadataSummary | null }
+  vault: { status: DarkvaultStatus; metadata: DarkvaultMetadataSummary | null }
   isRevealed: boolean
   activeOperation: OperationType
   logs: SystemLog[]
@@ -349,20 +349,20 @@ interface VaultState {
 }
 
 // Actions
-type VaultAction =
+type DarkvaultAction =
   | { type: 'CONNECT_WALLET'; payload: string }
   | { type: 'DISCONNECT_WALLET' }
-  | { type: 'SET_VAULT_METADATA'; payload: VaultMetadataSummary }
+  | { type: 'SET_VAULT_METADATA'; payload: DarkvaultMetadataSummary }
   | { type: 'TOGGLE_REVEAL' }
   | { type: 'PUSH_LOG'; payload: SystemLog }
   // ...
 
 // Exposed methods
-const VaultContext = {
+const DarkvaultContext = {
   state, dispatch,
   connectWallet, disconnectWallet,
   deposit, withdraw,
-  refreshVaultMetadata,
+  refreshDarkvaultMetadata,
   decryptBalance,
   fetchUserPositionHandle,
 }
@@ -417,7 +417,7 @@ const plaintext = result.plaintexts[0];  // bigint
 
 ## Account Data Parsing
 
-### Vault Account Layout (57 bytes)
+### Darkvault Account Layout (57 bytes)
 ```
 Offset  Size  Field
 ------  ----  -----
@@ -475,7 +475,7 @@ npm run dev
 npm run build
 ```
 
-### Initialize Vault (One-time)
+### Initialize Darkvault (One-time)
 ```bash
 npx tsx scripts/initialize-vault.ts
 ```
@@ -568,7 +568,7 @@ export default defineConfig({
 
 ## Recently Added Features (Jan 29, 2026)
 
-1. ✅ **Yield Distribution UI**: Vault authority can now distribute encrypted yield via admin panel
+1. ✅ **Yield Distribution UI**: Darkvault authority can now distribute encrypted yield via admin panel
 2. ✅ **Private Transfers**: Users can transfer encrypted amounts to other users with `e_ge()` balance validation
 3. ✅ **Balance Validation**: Transfer uses `e_ge()` + `e_select()` to prevent overdrafts
 

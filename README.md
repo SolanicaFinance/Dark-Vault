@@ -1,6 +1,6 @@
-# Vault-007
+# Darkvault
 
-> **A Confidential Yield Vault on Solana powered by Fully Homomorphic Encryption (FHE)**
+> **A Confidential Yield Darkvault on Solana powered by Fully Homomorphic Encryption (FHE)**
 
 [![Solana](https://img.shields.io/badge/Solana-Devnet-9945FF?style=flat&logo=solana)](https://solana.com)
 [![Inco](https://img.shields.io/badge/Inco-Lightning-00D4AA?style=flat)](https://inco.org)
@@ -11,9 +11,9 @@
 
 ## Overview
 
-Vault-007 is a **privacy-preserving DeFi vault** that enables users to deposit, withdraw, and transfer funds while keeping all balances completely confidential on-chain. Using Inco Network's Fully Homomorphic Encryption (FHE) technology, the vault performs arithmetic operations on encrypted data without ever revealing the underlying values.
+Darkvault is a **privacy-preserving DeFi vault** that enables users to deposit, withdraw, and transfer funds while keeping all balances completely confidential on-chain. Using Inco Network's Fully Homomorphic Encryption (FHE) technology, the vault performs arithmetic operations on encrypted data without ever revealing the underlying values.
 
-**Key Innovation**: Unlike traditional DeFi protocols where all balances are publicly visible, Vault-007 ensures that:
+**Key Innovation**: Unlike traditional DeFi protocols where all balances are publicly visible, Darkvault ensures that:
 - Your deposit amounts remain private
 - Your current balance is encrypted
 - Transfer amounts are hidden from observers
@@ -47,7 +47,7 @@ Vault-007 is a **privacy-preserving DeFi vault** that enables users to deposit, 
 - Both sender and recipient balances remain hidden
 
 ### 4. Yield Distribution
-- **Authority-controlled yield pool** - Vault authority adds SOL as yield rewards
+- **Authority-controlled yield pool** - Darkvault authority adds SOL as yield rewards
 - **Proportional distribution** - Yield is distributed based on each user's escrow balance
 - **Lazy claiming** - Users claim their accumulated yield when ready
 - **Encrypted yield amounts** - Individual allocations remain private
@@ -84,7 +84,7 @@ Vault-007 is a **privacy-preserving DeFi vault** that enables users to deposit, 
 ┌─────────────────────────────────────────────────────────────────┐
 │                     SOLANA BLOCKCHAIN                           │
 │  ┌─────────────────────────────────────────────────────────┐   │
-│  │                      Vault-007 Program                   │   │
+│  │                      Darkvault Program                   │   │
 │  │                                                          │   │
 │  │   encrypted_balance = e_add(encrypted_balance, amount)   │   │
 │  │                                                          │   │
@@ -139,7 +139,7 @@ Vault-007 is a **privacy-preserving DeFi vault** that enables users to deposit, 
 │  └──────────────┘  └──────────────┘  └──────────────┘              │
 │                                                                     │
 │  ┌──────────────────────────────────────────────────────────────┐  │
-│  │                      VaultService                             │  │
+│  │                      DarkvaultService                             │  │
 │  │  • Wallet connection (Phantom, Solflare, Trust, etc.)        │  │
 │  │  • Client-side encryption via @inco/solana-sdk               │  │
 │  │  • Transaction building & signing                            │  │
@@ -165,7 +165,7 @@ Vault-007 is a **privacy-preserving DeFi vault** that enables users to deposit, 
 │  └────────────────┘  └────────────────┘  └────────────────┘        │
 │                                                                     │
 │  Accounts:                                                          │
-│  • Vault PDA: Total encrypted balance, authority, yield index      │
+│  • Darkvault PDA: Total encrypted balance, authority, yield index      │
 │  • UserPosition PDA: Individual encrypted balances, yield index    │
 │  • StealthNote PDA: Secret-based transfers with hidden recipient   │
 └────────────────────────────────────────────────────────────────────┘
@@ -279,9 +279,9 @@ DmfUVqYJ5DG1iWww8YXt75zsB6RdmMws5qQMBWH4ofvC
 
 ### Account Structure
 
-**Vault Account** (57 bytes)
+**Darkvault Account** (57 bytes)
 ```rust
-pub struct Vault {
+pub struct Darkvault {
     pub authority: Pubkey,           // 32 bytes
     pub total_encrypted_balance: Euint128,  // 16 bytes (handle)
     pub bump: u8,                    // 1 byte
@@ -324,7 +324,7 @@ pub struct UserPosition {
 ### What's Public
 - Transaction existence (that a deposit/withdraw occurred)
 - Account addresses (PDAs are deterministic, but stealth note PDAs are derived from secret hashes)
-- Vault authority address
+- Darkvault authority address
 - Stealth note existence (but not who can claim it)
 
 ### Trust Assumptions
@@ -385,7 +385,7 @@ MIT License - see [LICENSE](LICENSE) for details
 
 ## Links
 
-- **GitHub Repository**: https://github.com/sunnysolana2003-crypto/Vault-007
+- **GitHub Repository**: https://github.com/sunnysolana2003-crypto/Darkvault
 - **Program Explorer**: [View on Solana Explorer](https://explorer.solana.com/address/DmfUVqYJ5DG1iWww8YXt75zsB6RdmMws5qQMBWH4ofvC?cluster=devnet)
 - **Inco Docs**: https://docs.inco.org
 - **Solana Docs**: https://docs.solana.com
@@ -396,8 +396,8 @@ MIT License - see [LICENSE](LICENSE) for details
 
 ```bash
 # Clone and run locally
-git clone https://github.com/sunnysolana2003-crypto/Vault-007.git
-cd Vault-007
+git clone https://github.com/sunnysolana2003-crypto/Darkvault.git
+cd Darkvault
 npm install --legacy-peer-deps
 npm run dev
 # Open http://localhost:3003

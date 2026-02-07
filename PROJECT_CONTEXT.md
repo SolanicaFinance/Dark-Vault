@@ -1,6 +1,6 @@
 # Project Status & Context Report
 **Generated on:** 2026-01-28
-**Project:** Private Alpha Vault (Solana + Inco Lightning FHE)
+**Project:** Darkvault (Solana + Inco Lightning FHE)
 
 ## Current Status
 - **Frontend:** React/Vite app with Inco SDK integration
@@ -69,7 +69,7 @@ const result = await decrypt([handle], {
 
 | Program | ID |
 |---------|-----|
-| Private Alpha Vault | `DmfUVqYJ5DG1iWww8YXt75zsB6RdmMws5qQMBWH4ofvC` |
+| Darkvault | `DmfUVqYJ5DG1iWww8YXt75zsB6RdmMws5qQMBWH4ofvC` |
 | Inco Lightning | `5sjEbPiqgZrYwR31ahR6Uk9wf5awoX61YGg7jExQSwaj` |
 
 ---
@@ -98,7 +98,7 @@ npm run dev
 ## Architecture
 
 ### Account Structure
-- **Vault PDA** (`seeds = [b"vault"]`)
+- **Darkvault PDA** (`seeds = [b"vault"]`)
   - `authority: Pubkey` - Can apply yield
   - `total_encrypted_balance: Euint128` - FHE-encrypted total
   - `bump: u8`

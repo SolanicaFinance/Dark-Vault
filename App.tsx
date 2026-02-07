@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { VaultProvider, useVault } from './context/VaultContext';
+import { DarkvaultProvider, useDarkvault } from './context/DarkvaultContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import WhyConfidential from './components/WhyConfidential';
 import HowItWorks from './components/HowItWorks';
-import VaultTerminal from './components/VaultTerminal';
+import DarkvaultTerminal from './components/DarkvaultTerminal';
 import ProtocolSpecs from './components/ProtocolSpecs';
 import CTA from './components/CTA';
 import WalletModal from './components/WalletModal';
 import OnboardingTour from './components/OnboardingTour';
 
 const AppContent: React.FC = () => {
-  const { showWalletModal, setShowWalletModal, handleWalletSelect } = useVault();
+  const { showWalletModal, setShowWalletModal, handleWalletSelect } = useDarkvault();
   const [runTour, setRunTour] = useState(false);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const AppContent: React.FC = () => {
           </div>
           
           <div id="terminal" className="border-t border-[#141414]">
-            <VaultTerminal />
+            <DarkvaultTerminal />
           </div>
 
           <div id="features" className="border-t border-[#141414]">
@@ -98,9 +98,9 @@ const AppContent: React.FC = () => {
 
 const App: React.FC = () => {
   return (
-    <VaultProvider>
+    <DarkvaultProvider>
       <AppContent />
-    </VaultProvider>
+    </DarkvaultProvider>
   );
 };
 

@@ -1,4 +1,4 @@
-# Vault-007 Architecture Diagram
+# Darkvault Architecture Diagram
 
 ```mermaid
 graph TD
@@ -14,12 +14,12 @@ graph TD
     end
 
     subgraph Solana ["Solana Blockchain (Devnet)"]
-        Program["Vault-007 Anchor Program"]
-        VaultPDA["Vault PDA (Global State)"]
+        Program["Darkvault-007 Anchor Program"]
+        DarkvaultPDA["Darkvault PDA (Global State)"]
         UserPDA["UserPosition PDA (User State)"]
         NotePDA["StealthNote PDA (Note State)"]
         
-        Program -->|"Read/Write"| VaultPDA
+        Program -->|"Read/Write"| DarkvaultPDA
         Program -->|"Read/Write"| UserPDA
         Program -->|"Read/Write"| NotePDA
     end
@@ -49,8 +49,8 @@ graph TD
 ## Component Breakdown
 
 ### 1. Frontend (React 19)
-- **VaultContext**: Manages global state, wallet connection, and FHE operations.
-- **VaultService**: The bridge between the UI and the Solana/Inco protocols.
+- **DarkvaultContext**: Manages global state, wallet connection, and FHE operations.
+- **DarkvaultService**: The bridge between the UI and the Solana/Inco protocols.
 - **Components**: Terminal-style UI for Deposit, Withdraw, Transfer, and Stealth Notes.
 
 ### 2. Backend (Anchor/Rust)
@@ -61,7 +61,7 @@ graph TD
     - `claim_stealth_note`: Secret-based fund claiming with hidden recipient.
     - `apply_yield`: Global yield distribution via index update.
 - **State**:
-    - `Vault`: Stores total encrypted balance and global yield index.
+    - `Darkvault`: Stores total encrypted balance and global yield index.
     - `UserPosition`: Stores individual encrypted balance and last observed yield index.
 
 ### 3. FHE Layer (Inco Lightning)

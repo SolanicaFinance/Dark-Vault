@@ -22,11 +22,11 @@ https://explorer.solana.com/tx/4twLDCJXiHw6wu2cAkqAtEAmD1oZvNPGAwKsuVVMzibiYpiny
 - Program owner: BPFLoaderUpgradeab1e11111111111111111111111
 - **Status**: PASSED
 
-### ✅ Test 2: Vault State Check
-- Vault PDA: `5SDA2ZsZ6Du2fhRw1UqgkHG4HwNwnCyeAPiMK4XDTerL`
-- Vault initialized: YES
-- Vault authority: `9SgoCZCCjqMHTKi5MCyTCze2oonAX4gMXLeUssF7dkbS`
-- Vault balance handle: `10940823982584039495` (encrypted)
+### ✅ Test 2: Darkvault State Check
+- Darkvault PDA: `5SDA2ZsZ6Du2fhRw1UqgkHG4HwNwnCyeAPiMK4XDTerL`
+- Darkvault initialized: YES
+- Darkvault authority: `9SgoCZCCjqMHTKi5MCyTCze2oonAX4gMXLeUssF7dkbS`
+- Darkvault balance handle: `10940823982584039495` (encrypted)
 - **Status**: PASSED
 
 ### ✅ Test 3: Transfer Instruction Verification
@@ -181,8 +181,8 @@ async transfer(amount: number, recipient: PublicKey): Promise<string>
 ```
 
 **UI Locations**:
-- Admin Panel: Top of VaultTerminal (yellow section, authority only)
-- Transfer Panel: Below Admin Panel in VaultTerminal
+- Admin Panel: Top of DarkvaultTerminal (yellow section, authority only)
+- Transfer Panel: Below Admin Panel in DarkvaultTerminal
 - Transfer Tab: In ActionSuite component (Deposit | Withdraw | Transfer)
 
 ---
