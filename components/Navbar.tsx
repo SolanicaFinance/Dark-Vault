@@ -26,14 +26,15 @@ const Navbar: React.FC = () => {
       )}
       <div className="max-w-[1280px] mx-auto px-4 md:px-12 h-16 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center">
               <Link to="/" className="flex items-center space-x-3">
                 <img src={logo} className="w-10 h-10" alt="Uranix Logo" />
-                <span className="text-xl font-bold text-white">Dark Vault</span>
               </Link>
           </div>
-         
+          <span className="font-bold text-white text-[14px] tracking-[0.2em]">DARK VAULT</span>
+        </div>
+        
         {/* Navigation Links */}
         <div className="hidden md:flex items-center gap-8">
           <a href="#terminal" className="text-[12px] text-[#666] hover:text-white transition-colors">Darkvault</a>
