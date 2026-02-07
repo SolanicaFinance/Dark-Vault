@@ -33,9 +33,7 @@ const Navbar: React.FC = () => {
                 <span className="text-xl font-bold text-white">Dark Vault</span>
               </Link>
           </div>
-          <span className="font-bold text-white text-[14px] tracking-[0.2em]">VAULT-007</span>
-        </div>
-
+         
         {/* Navigation Links */}
         <div className="hidden md:flex items-center gap-8">
           <a href="#terminal" className="text-[12px] text-[#666] hover:text-white transition-colors">Darkvault</a>
