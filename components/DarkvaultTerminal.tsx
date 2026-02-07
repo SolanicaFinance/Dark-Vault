@@ -220,7 +220,7 @@ const DarkvaultTerminal: React.FC = () => {
                     </svg>
                   </div>
                   <div>
-                    <h2 className="text-lg font-semibold text-white">Darkvault-007 Terminal</h2>
+                    <h2 className="text-lg font-semibold text-white">Dark Vault Terminal</h2>
                     <p className="text-[11px] text-[#666] mono">FHE-Encrypted Operations</p>
                   </div>
                 </div>
