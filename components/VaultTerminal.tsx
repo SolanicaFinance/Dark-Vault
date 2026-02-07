@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useVault } from '../context/VaultContext';
+import { useDarkvault } from '../context/DarkvaultContext';
 import ActionSuite from './ActionSuite';
 import AdminPanel from './AdminPanel';
 import TransferPanel from './TransferPanel';
 import StealthNotes from './StealthNotes';
 import { motion } from 'framer-motion';
 
-const VaultTerminal: React.FC = () => {
+const DarkvaultTerminal: React.FC = () => {
   const {
     state,
     dispatch,
@@ -14,10 +14,10 @@ const VaultTerminal: React.FC = () => {
     fetchUserPositionHandle,
     fetchUserEscrowBalance,
     fetchUserYieldIndex,
-    refreshVaultMetadata,
+    refreshDarkvaultMetadata,
     claimAccess,
     claimYield,
-  } = useVault();
+  } = useDarkvault();
   const isConnected = state.wallet.status === 'connected';
   const vaultMetadata = state.vault.totals.metadata;
 
@@ -47,9 +47,9 @@ const VaultTerminal: React.FC = () => {
   // Auto-refresh vault metadata on mount and when connected
   useEffect(() => {
     if (isConnected) {
-      refreshVaultMetadata();
+      refreshDarkvaultMetadata();
     }
-  }, [isConnected, refreshVaultMetadata]);
+  }, [isConnected, refreshDarkvaultMetadata]);
 
   // Handle decryption when reveal is toggled
   useEffect(() => {
@@ -87,7 +87,7 @@ const VaultTerminal: React.FC = () => {
           if (!cancelled) setUserYieldIndex(yIndex);
         } catch (userErr) {
           const errMsg = userErr instanceof Error ? userErr.message : '';
-          console.log('[Vault] User decryption error details:', errMsg);
+          console.log('[Darkvault] User decryption error details:', errMsg);
           
           // Check if this is a "not allowed to decrypt" error (403 from Inco)
           const isPermissionError = 
@@ -97,7 +97,7 @@ const VaultTerminal: React.FC = () => {
             errMsg.includes('Covalidator API request failed');
             
           if (isPermissionError) {
-            console.log('[Vault] Permission required for user handle. Showing Claim Access button.');
+            console.log('[Darkvault] Permission required for user handle. Showing Claim Access button.');
             if (!cancelled) {
               setNeedsClaimAccess(true);
               setUserPlaintextLamports(null);
@@ -106,14 +106,14 @@ const VaultTerminal: React.FC = () => {
             }
           } else if (errMsg.includes('not found') || errMsg.includes('does not exist')) {
             // User position doesn't exist yet - that's okay
-            console.log('[Vault] User position does not exist yet.');
+            console.log('[Darkvault] User position does not exist yet.');
             if (!cancelled) {
               setUserPlaintextLamports(null);
               setDecryptError(null);
             }
           } else {
             // Some other error - but don't show technical errors to user
-            console.log('[Vault] Other error:', errMsg);
+            console.log('[Darkvault] Other error:', errMsg);
             if (!cancelled) setUserPlaintextLamports(null);
           }
         }
@@ -131,7 +131,7 @@ const VaultTerminal: React.FC = () => {
             setDecryptError(null);
           } else {
             // Don't show technical errors, just log them
-            console.error('[Vault] Decryption error:', errMsg);
+            console.error('[Darkvault] Decryption error:', errMsg);
           }
         }
       } finally {
@@ -206,11 +206,11 @@ const VaultTerminal: React.FC = () => {
       </div>
 
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
-        {/* Main Vault Display */}
+        {/* Main Darkvault Display */}
         <div className="lg:col-span-8 p-6 md:p-12 overflow-y-auto border-r border-[#141414]">
           <div className="max-w-4xl mx-auto space-y-8">
             
-            {/* Vault State Card */}
+            {/* Darkvault State Card */}
             <div className="border border-[#1a1a1a] bg-[#080808] rounded-lg overflow-hidden">
               <div className="px-6 py-4 border-b border-[#1a1a1a] flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -220,7 +220,7 @@ const VaultTerminal: React.FC = () => {
                     </svg>
                   </div>
                   <div>
-                    <h2 className="text-lg font-semibold text-white">Vault-007 Terminal</h2>
+                    <h2 className="text-lg font-semibold text-white">Darkvault-007 Terminal</h2>
                     <p className="text-[11px] text-[#666] mono">FHE-Encrypted Operations</p>
                   </div>
                 </div>
@@ -241,10 +241,10 @@ const VaultTerminal: React.FC = () => {
               </div>
 
               <div className="p-6 space-y-6">
-                {/* Your Vault Balance - Main Display */}
+                {/* Your Darkvault Balance - Main Display */}
                 <div className="bg-[#0a0a0a] rounded-lg p-8 border border-[#1a1a1a]">
                   <div className="flex items-center justify-between mb-6">
-                    <span className="text-[12px] text-[#888] uppercase tracking-wider font-medium">Your Vault Balance</span>
+                    <span className="text-[12px] text-[#888] uppercase tracking-wider font-medium">Your Darkvault Balance</span>
                     <span className={`text-[10px] px-3 py-1.5 rounded-full font-medium ${
                       needsClaimAccess 
                         ? 'bg-amber-900/30 text-amber-400 border border-amber-900/40' 
@@ -382,7 +382,7 @@ const VaultTerminal: React.FC = () => {
             {/* How It Works */}
             <div className="border border-[#1a1a1a] bg-[#080808] rounded-lg overflow-hidden">
               <div className="px-6 py-4 border-b border-[#1a1a1a]">
-                <h3 className="text-sm font-semibold text-white">How Vault-007 Works</h3>
+                <h3 className="text-sm font-semibold text-white">How Darkvault Works</h3>
               </div>
               <div className="p-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -426,4 +426,4 @@ const VaultTerminal: React.FC = () => {
   );
 };
 
-export default VaultTerminal;
+export default DarkvaultTerminal;

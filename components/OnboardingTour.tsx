@@ -13,7 +13,7 @@ const OnboardingTour: React.FC<OnboardingTourProps> = ({ run, onFinish }) => {
       placement: 'center',
       content: (
         <div className="text-left">
-          <h3 className="text-lg font-bold mb-2">Welcome to Vault-007 🕵️‍♂️</h3>
+          <h3 className="text-lg font-bold mb-2">Welcome to Darkvault 🕵️‍♂️</h3>
           <p className="text-sm text-gray-600">
             The world's first fully confidential yield vault on Solana. 
             Math happens on encrypted data using FHE (Fully Homomorphic Encryption).
@@ -28,7 +28,7 @@ const OnboardingTour: React.FC<OnboardingTourProps> = ({ run, onFinish }) => {
         <div className="text-left">
           <h3 className="font-bold mb-1">Confidential Protocol</h3>
           <p className="text-sm text-gray-600">
-            Vault-007 keeps your financial activity 100% private. 
+            Darkvault keeps your financial activity 100% private. 
             No one can see your deposits, transfers, or balance.
           </p>
         </div>

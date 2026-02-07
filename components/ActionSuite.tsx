@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useVault } from '../context/VaultContext';
+import { useDarkvault } from '../context/DarkvaultContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ActionSuite: React.FC = () => {
-  const { state, deposit, withdraw, transfer, connectWallet, refreshVaultMetadata } = useVault();
+  const { state, deposit, withdraw, transfer, connectWallet, refreshDarkvaultMetadata } = useDarkvault();
   const isConnected = state.wallet.status === 'connected';
   const [tab, setTab] = useState<'deposit' | 'withdraw' | 'transfer'>('deposit');
   const [localError, setLocalError] = useState<{ code: string; msg: string } | null>(null);
@@ -39,7 +39,7 @@ const ActionSuite: React.FC = () => {
       setTxSignature(signature);
       setAmountInput('');
       setRecipientInput('');
-      await refreshVaultMetadata();
+      await refreshDarkvaultMetadata();
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Transaction failed';
       setLocalError({ code: 'TX_FAILED', msg: message });
@@ -60,7 +60,7 @@ const ActionSuite: React.FC = () => {
           </div>
           <h3 className="text-white font-semibold mb-2">Connect Wallet</h3>
           <p className="text-[12px] text-[#666] mb-6 max-w-[200px]">
-            Connect your Phantom wallet to deposit or withdraw from the confidential vault
+            Connect your Phantom wallet to deposit or withdraw from the confidential darkvault
           </p>
           <button 
             onClick={() => {
@@ -80,7 +80,7 @@ const ActionSuite: React.FC = () => {
           <svg className="w-5 h-5 text-[#666]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <h3 className="text-white font-semibold">Vault Operations</h3>
+          <h3 className="text-white font-semibold">Darkvault Operations</h3>
         </div>
         
         {/* Tab Switcher */}
@@ -204,7 +204,7 @@ const ActionSuite: React.FC = () => {
             <div className="mt-2 space-y-1">
               <p className="text-[10px] text-[#444]">
                 {tab === 'deposit' 
-                  ? 'Amount will be encrypted before sending to the vault'
+                  ? 'Amount will be encrypted before sending to the darkvault'
                   : tab === 'withdraw'
                     ? 'Withdrawal amount is encrypted during processing'
                     : 'Transfer amount is encrypted - only you and recipient can see it'

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useVault } from '../context/VaultContext';
+import { useDarkvault } from '../context/DarkvaultContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const AdminPanel: React.FC = () => {
-  const { state, applyYield, refreshVaultMetadata } = useVault();
+  const { state, applyYield, refreshDarkvaultMetadata } = useDarkvault();
   const vaultMetadata = state.vault.totals.metadata;
   const isAuthority = vaultMetadata && state.wallet.address === vaultMetadata.authority;
   
@@ -31,7 +31,7 @@ const AdminPanel: React.FC = () => {
       const signature = await applyYield(amount);
       setTxSignature(signature);
       setYieldAmount('');
-      await refreshVaultMetadata();
+      await refreshDarkvaultMetadata();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Yield distribution failed');
     } finally {

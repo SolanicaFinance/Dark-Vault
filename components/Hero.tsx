@@ -1,8 +1,8 @@
 import React from 'react';
-import { useVault } from '../context/VaultContext';
+import { useDarkvault } from '../context/DarkvaultContext';
 
 const Hero: React.FC = () => {
-  const { connectWallet, state, cluster } = useVault();
+  const { connectWallet, state, cluster } = useDarkvault();
   const isConnected = state.wallet.status === 'connected';
   const clusterLabel = cluster.label.toUpperCase();
 
@@ -19,7 +19,7 @@ const Hero: React.FC = () => {
         </div>
 
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-[1.1]">
-          Vault-007
+          Darkvault
           <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-yellow-500">
             Licensed for Encrypted Finance
@@ -27,7 +27,7 @@ const Hero: React.FC = () => {
         </h1>
 
         <p className="max-w-xl text-lg text-[#888] mb-10 leading-relaxed">
-          Vault-007 is the ultimate confidential banking protocol on Solana. 
+          Darkvault is the ultimate confidential banking protocol on Solana. 
           Encrypt your wealth, send stealth transfers, and earn private yield 
           using state-of-the-art FHE — all within a single, secure vault.
         </p>
@@ -51,7 +51,7 @@ const Hero: React.FC = () => {
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
-              Open Vault Terminal
+              Open Darkvault Terminal
             </a>
           )}
           <a 

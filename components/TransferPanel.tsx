@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useVault } from '../context/VaultContext';
+import { useDarkvault } from '../context/DarkvaultContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PublicKey } from '@solana/web3.js';
 
 const TransferPanel: React.FC = () => {
-  const { state, transfer, refreshVaultMetadata } = useVault();
+  const { state, transfer, refreshDarkvaultMetadata } = useDarkvault();
   const isConnected = state.wallet.status === 'connected';
   
   const [recipientAddress, setRecipientAddress] = useState('');
@@ -56,7 +56,7 @@ const TransferPanel: React.FC = () => {
       setTxSignature(signature);
       setRecipientAddress('');
       setAmount('');
-      await refreshVaultMetadata();
+      await refreshDarkvaultMetadata();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Transfer failed');
     } finally {

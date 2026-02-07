@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useVault } from '../context/VaultContext';
+import { useDarkvault } from '../context/DarkvaultContext';
 
 type TabType = 'send' | 'claim';
 
 const StealthNotes: React.FC = () => {
-  const { state, createStealthNote, claimStealthNote, checkStealthNote, cluster } = useVault();
+  const { state, createStealthNote, claimStealthNote, checkStealthNote, cluster } = useDarkvault();
   const [activeTab, setActiveTab] = useState<TabType>('send');
   const [amount, setAmount] = useState('');
   const [secret, setSecret] = useState('');

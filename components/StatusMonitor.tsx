@@ -1,9 +1,9 @@
 import React from 'react';
-import { useVault, SystemLog } from '../context/VaultContext';
+import { useDarkvault, SystemLog } from '../context/DarkvaultContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const StatusMonitor: React.FC = () => {
-  const { state, cluster } = useVault();
+  const { state, cluster } = useDarkvault();
   const isConnected = state.wallet.status === 'connected';
   const clusterLabel = cluster.label.toUpperCase();
 
@@ -48,7 +48,7 @@ const StatusMonitor: React.FC = () => {
             <span className="text-[11px] text-amber-300 font-medium">Inco FHE</span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-[11px] text-[#555]">Vault Status</span>
+            <span className="text-[11px] text-[#555]">Darkvault Status</span>
             <span className={`text-[11px] font-medium ${state.vault.totals.metadata ? 'text-emerald-400' : 'text-[#555]'}`}>
               {state.vault.totals.metadata ? 'Initialized' : 'Unknown'}
             </span>

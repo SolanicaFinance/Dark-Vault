@@ -3,7 +3,7 @@ import React from 'react';
 const theses = [
   {
     topic: "Confidential Operations",
-    description: "Vault-007 utilizes Fully Homomorphic Encryption (FHE) to perform deposits, withdrawals, and transfers. Math happens on encrypted data, ensuring your financial activity is never exposed."
+    description: "Darkvault utilizes Fully Homomorphic Encryption (FHE) to perform deposits, withdrawals, and transfers. Math happens on encrypted data, ensuring your financial activity is never exposed."
   },
   {
     topic: "Stealth Note Transfers",

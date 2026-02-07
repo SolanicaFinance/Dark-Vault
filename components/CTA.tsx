@@ -7,7 +7,7 @@ const CTA: React.FC = () => {
         <div className="text-[10px] mono text-[#444444] uppercase tracking-[0.3em] mb-6">Access_Request</div>
         <h2 className="text-5xl font-bold text-white mb-8 tracking-tighter uppercase">Join the Protocol.</h2>
         <p className="text-[#777777] text-lg mb-12 font-light leading-relaxed">
-          Vault-007 is accepting early access participants.
+          Darkvault is accepting early access participants.
           Deployments run on Solana with Inco Lightning encrypted compute.
         </p>
         

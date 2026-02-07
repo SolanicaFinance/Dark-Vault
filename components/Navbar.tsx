@@ -1,8 +1,8 @@
 import React from 'react';
-import { useVault } from '../context/VaultContext';
+import { useDarkvault } from '../context/DarkvaultContext';
 
 const Navbar: React.FC = () => {
-  const { state, connectWallet, disconnectWallet, cluster, clusters, setCluster } = useVault();
+  const { state, connectWallet, disconnectWallet, cluster, clusters, setCluster } = useDarkvault();
   const isConnected = state.wallet.status === 'connected';
 
   const handleConnect = () => {
@@ -35,7 +35,7 @@ const Navbar: React.FC = () => {
 
         {/* Navigation Links */}
         <div className="hidden md:flex items-center gap-8">
-          <a href="#terminal" className="text-[12px] text-[#666] hover:text-white transition-colors">Vault</a>
+          <a href="#terminal" className="text-[12px] text-[#666] hover:text-white transition-colors">Darkvault</a>
           <a href="#features" className="text-[12px] text-[#666] hover:text-white transition-colors">Features</a>
           <a href="#specs" className="text-[12px] text-[#666] hover:text-white transition-colors">Specs</a>
           <a 

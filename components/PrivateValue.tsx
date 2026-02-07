@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { useVault } from '../context/VaultContext';
+import { useDarkvault } from '../context/DarkvaultContext';
 
 interface PrivateValueProps {
   value: string | number;
@@ -14,7 +14,7 @@ const PrivateValue: React.FC<PrivateValueProps> = ({
   mono = false, 
   className = "" 
 }) => {
-  const { state, dispatch } = useVault();
+  const { state, dispatch } = useDarkvault();
   const [isLocalRevealed, setIsLocalRevealed] = useState(false);
   const [decryptError, setDecryptError] = useState(false);
   const [isRetrying, setIsRetrying] = useState(false);
