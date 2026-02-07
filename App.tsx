@@ -15,7 +15,7 @@ const AppContent: React.FC = () => {
   const [runTour, setRunTour] = useState(false);
 
   useEffect(() => {
-    const hasSeenTour = localStorage.getItem('vault007_tour_seen');
+    const hasSeenTour = localStorage.getItem('darkvault_tour_seen');
     if (!hasSeenTour) {
       // Delay tour slightly for better UX
       const timer = setTimeout(() => setRunTour(true), 1500);
@@ -25,7 +25,7 @@ const AppContent: React.FC = () => {
 
   const handleTourFinish = () => {
     setRunTour(false);
-    localStorage.setItem('vault007_tour_seen', 'true');
+    localStorage.setItem('darkvault_tour_seen', 'true');
   };
 
   return (
