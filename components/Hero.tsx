@@ -1,5 +1,7 @@
 import React from 'react';
 import { useDarkvault } from '../context/DarkvaultContext';
+import logo from "../assets/logo.png";
+
 
 const Hero: React.FC = () => {
   const { connectWallet, state, cluster } = useDarkvault();
@@ -22,7 +24,7 @@ const Hero: React.FC = () => {
           Darkvault
           <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-yellow-500">
-            Licensed for Encrypted Finance
+            Encrypted Finance
           </span>
         </h1>
 
