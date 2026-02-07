@@ -1,3 +1,3 @@
-# Private Alpha Vault Backend
+# Dark Vault Backend
 
-Confidential DeFi vault using Inco Lightning on Solana.
+Confidential DeFi Dark vault using Inco Lightning on Solana.
