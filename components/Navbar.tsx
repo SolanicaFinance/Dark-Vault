@@ -29,7 +29,7 @@ const Navbar: React.FC = () => {
       <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center">
               <Link to="/" className="flex items-center space-x-3">
-                <img src={logo} className="w-10 h-10" alt="Uranix Logo" />
+                <img src={logo} className="w-4 h-4" alt="Dark Vault Logo" />
               </Link>
           </div>
           <span className="font-bold text-white text-[14px] tracking-[0.2em]">DARK VAULT</span>
