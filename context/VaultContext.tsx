@@ -9,11 +9,11 @@ import React, {
   useState,
   ReactNode,
 } from 'react';
-import VaultService, { VaultMetadataSummary, StealthNoteInfo } from '../services/vault';
+import DarkvaultService, { DarkvaultMetadataSummary, StealthNoteInfo } from '../services/vault';
 import { type WalletProvider } from '../services/wallet-detector';
 
 type WalletStatus = 'disconnected' | 'connecting' | 'connected';
-type VaultStatus = 'idle' | 'loading' | 'ready' | 'error';
+type DarkvaultStatus = 'idle' | 'loading' | 'ready' | 'error';
 type OperationType = 'deposit' | 'withdraw' | 'reveal' | null;
 
 type ClusterId = 'devnet' | 'testnet' | 'mainnet-beta';
@@ -31,20 +31,20 @@ export interface SystemLog {
   message: string;
 }
 
-interface VaultMetadata {
+interface DarkvaultMetadata {
   totalBalance: number;
-  metadata: VaultMetadataSummary | null;
+  metadata: DarkvaultMetadataSummary | null;
 }
 
-interface VaultState {
+interface DarkvaultState {
   wallet: {
     address: string | null;
     status: WalletStatus;
   };
   vault: {
-    status: VaultStatus;
+    status: DarkvaultStatus;
     lastUpdated: string | null;
-    totals: VaultMetadata;
+    totals: DarkvaultMetadata;
   };
   isRevealed: boolean;
   activeOperation: OperationType;
@@ -52,11 +52,11 @@ interface VaultState {
   systemError: string | null;
 }
 
-type VaultAction =
+type DarkvaultAction =
   | { type: 'CONNECT_WALLET'; payload: string }
   | { type: 'DISCONNECT_WALLET' }
-  | { type: 'SET_VAULT_STATUS'; payload: VaultStatus }
-  | { type: 'SET_VAULT_METADATA'; payload: VaultMetadataSummary }
+  | { type: 'SET_VAULT_STATUS'; payload: DarkvaultStatus }
+  | { type: 'SET_VAULT_METADATA'; payload: DarkvaultMetadataSummary }
   | { type: 'ADJUST_TOTAL_BALANCE'; payload: number }
   | { type: 'TOGGLE_REVEAL' }
   | { type: 'START_OPERATION'; payload: OperationType }
@@ -65,7 +65,7 @@ type VaultAction =
   | { type: 'SET_SYSTEM_ERROR'; payload: string | null }
   | { type: 'CLEAR_LOGS' };
 
-const initialState: VaultState = {
+const initialState: DarkvaultState = {
   wallet: {
     address: null,
     status: 'disconnected',
@@ -102,9 +102,9 @@ function formatOperationError(err: unknown, operation: OperationType | 'transfer
   return message;
 }
 
-type VaultContextValue = {
-  state: VaultState;
-  dispatch: React.Dispatch<VaultAction>;
+type DarkvaultContextValue = {
+  state: DarkvaultState;
+  dispatch: React.Dispatch<DarkvaultAction>;
   cluster: ClusterOption;
   setCluster: (cluster: ClusterOption) => void;
   clusters: ClusterOption[];
@@ -114,7 +114,7 @@ type VaultContextValue = {
   withdraw: (amount: number) => Promise<string>;
   applyYield: (amount: number) => Promise<string>;
   transfer: (amount: number, recipient: string) => Promise<string>;
-  refreshVaultMetadata: () => Promise<void>;
+  refreshDarkvaultMetadata: () => Promise<void>;
   decryptBalance: (handle: string) => Promise<bigint>;
   fetchUserPositionHandle: () => Promise<string>;
   fetchUserEscrowBalance: () => Promise<number>;
@@ -129,9 +129,9 @@ type VaultContextValue = {
   handleWalletSelect: (wallet: WalletProvider) => Promise<void>;
 };
 
-const VaultContext = createContext<VaultContextValue | undefined>(undefined);
+const DarkvaultContext = createContext<DarkvaultContextValue | undefined>(undefined);
 
-function vaultReducer(state: VaultState, action: VaultAction): VaultState {
+function vaultReducer(state: DarkvaultState, action: DarkvaultAction): DarkvaultState {
   switch (action.type) {
     case 'CONNECT_WALLET':
       return {
@@ -225,11 +225,11 @@ function vaultReducer(state: VaultState, action: VaultAction): VaultState {
   }
 }
 
-export const VaultProvider: React.FC<{ children: ReactNode }> = ({
+export const DarkvaultProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [state, dispatch] = useReducer(vaultReducer, initialState);
-  const vaultServiceRef = useRef<VaultService>(new VaultService());
+  const vaultServiceRef = useRef<DarkvaultService>(new DarkvaultService());
   const [showWalletModal, setShowWalletModal] = useState(false);
   const clusters: ClusterOption[] = [
     {
@@ -256,9 +256,9 @@ export const VaultProvider: React.FC<{ children: ReactNode }> = ({
     clusters.find((item) => item.id === defaultClusterId) ?? clusters[0]!;
   const [cluster, setClusterState] = useState<ClusterOption>(defaultCluster);
 
-  const refreshVaultMetadata = useCallback(async () => {
+  const refreshDarkvaultMetadata = useCallback(async () => {
     try {
-      const metadata = await vaultServiceRef.current.fetchVaultState();
+      const metadata = await vaultServiceRef.current.fetchDarkvaultState();
       dispatch({ type: 'SET_VAULT_METADATA', payload: metadata });
     } catch (err) {
       dispatch({
@@ -283,10 +283,10 @@ export const VaultProvider: React.FC<{ children: ReactNode }> = ({
     setClusterState(nextCluster);
     vaultServiceRef.current.setRpcEndpoint(nextCluster.rpcUrl, nextCluster.id);
     dispatch({ type: 'SET_VAULT_STATUS', payload: 'loading' });
-    void refreshVaultMetadata().finally(() =>
+    void refreshDarkvaultMetadata().finally(() =>
       dispatch({ type: 'SET_VAULT_STATUS', payload: 'ready' })
     );
-  }, [refreshVaultMetadata]);
+  }, [refreshDarkvaultMetadata]);
 
   const connectWallet = useCallback(async () => {
     setShowWalletModal(true);
@@ -305,7 +305,7 @@ export const VaultProvider: React.FC<{ children: ReactNode }> = ({
           message: `Connected ${walletProvider.name}: ${address.toBase58().slice(0, 8)}...`,
         },
       });
-      await refreshVaultMetadata();
+      await refreshDarkvaultMetadata();
       dispatch({ type: 'SET_VAULT_STATUS', payload: 'ready' });
     } catch (err) {
       dispatch({ type: 'SET_VAULT_STATUS', payload: 'error' });
@@ -322,7 +322,7 @@ export const VaultProvider: React.FC<{ children: ReactNode }> = ({
         payload: err instanceof Error ? err.message : 'Wallet connection failed.',
       });
     }
-  }, [refreshVaultMetadata]);
+  }, [refreshDarkvaultMetadata]);
 
   const disconnectWallet = useCallback(async () => {
     await vaultServiceRef.current.disconnect();
@@ -364,7 +364,7 @@ export const VaultProvider: React.FC<{ children: ReactNode }> = ({
           payload: type === 'deposit' ? amount : -amount,
         });
 
-        await refreshVaultMetadata();
+        await refreshDarkvaultMetadata();
         return signature;
       } catch (err) {
         dispatch({
@@ -380,7 +380,7 @@ export const VaultProvider: React.FC<{ children: ReactNode }> = ({
         dispatch({ type: 'END_OPERATION' });
       }
     },
-    [refreshVaultMetadata]
+    [refreshDarkvaultMetadata]
   );
 
   const deposit = useCallback(
@@ -405,7 +405,7 @@ export const VaultProvider: React.FC<{ children: ReactNode }> = ({
           message: `Yield applied successfully (${signature.slice(0, 8)})`,
         },
       });
-      await refreshVaultMetadata();
+      await refreshDarkvaultMetadata();
       return signature;
     } catch (err) {
       dispatch({
@@ -420,7 +420,7 @@ export const VaultProvider: React.FC<{ children: ReactNode }> = ({
     } finally {
       dispatch({ type: 'END_OPERATION' });
     }
-  }, [refreshVaultMetadata]);
+  }, [refreshDarkvaultMetadata]);
 
   const transfer = useCallback(async (amount: number, recipient: string): Promise<string> => {
     dispatch({ type: 'START_OPERATION', payload: 'deposit' });
@@ -435,7 +435,7 @@ export const VaultProvider: React.FC<{ children: ReactNode }> = ({
           message: `Transfer completed (${signature.slice(0, 8)})`,
         },
       });
-      await refreshVaultMetadata();
+      await refreshDarkvaultMetadata();
       return signature;
     } catch (err) {
       dispatch({
@@ -450,7 +450,7 @@ export const VaultProvider: React.FC<{ children: ReactNode }> = ({
     } finally {
       dispatch({ type: 'END_OPERATION' });
     }
-  }, [refreshVaultMetadata]);
+  }, [refreshDarkvaultMetadata]);
 
   const decryptBalance = useCallback(async (handle: string): Promise<bigint> => {
     dispatch({ type: 'START_OPERATION', payload: 'reveal' });
@@ -541,7 +541,7 @@ export const VaultProvider: React.FC<{ children: ReactNode }> = ({
           message: `Yield claimed (${signature.slice(0, 8)})`,
         },
       });
-      await refreshVaultMetadata();
+      await refreshDarkvaultMetadata();
       return signature;
     } catch (err) {
       dispatch({
@@ -556,7 +556,7 @@ export const VaultProvider: React.FC<{ children: ReactNode }> = ({
     } finally {
       dispatch({ type: 'END_OPERATION' });
     }
-  }, [refreshVaultMetadata]);
+  }, [refreshDarkvaultMetadata]);
 
   const claimAccess = useCallback(async (): Promise<string> => {
     dispatch({ type: 'START_OPERATION', payload: 'reveal' });
@@ -598,7 +598,7 @@ export const VaultProvider: React.FC<{ children: ReactNode }> = ({
           message: `Stealth note created (${result.signature.slice(0, 8)})`,
         },
       });
-      await refreshVaultMetadata();
+      await refreshDarkvaultMetadata();
       return result;
     } catch (err) {
       dispatch({
@@ -613,7 +613,7 @@ export const VaultProvider: React.FC<{ children: ReactNode }> = ({
     } finally {
       dispatch({ type: 'END_OPERATION' });
     }
-  }, [refreshVaultMetadata]);
+  }, [refreshDarkvaultMetadata]);
 
   const claimStealthNote = useCallback(async (secret: string): Promise<string> => {
     dispatch({ type: 'START_OPERATION', payload: 'deposit' });
@@ -627,7 +627,7 @@ export const VaultProvider: React.FC<{ children: ReactNode }> = ({
           message: `Stealth note claimed (${signature.slice(0, 8)})`,
         },
       });
-      await refreshVaultMetadata();
+      await refreshDarkvaultMetadata();
       return signature;
     } catch (err) {
       dispatch({
@@ -642,7 +642,7 @@ export const VaultProvider: React.FC<{ children: ReactNode }> = ({
     } finally {
       dispatch({ type: 'END_OPERATION' });
     }
-  }, [refreshVaultMetadata]);
+  }, [refreshDarkvaultMetadata]);
 
   const checkStealthNote = useCallback(async (secret: string): Promise<StealthNoteInfo | null> => {
     try {
@@ -661,7 +661,7 @@ export const VaultProvider: React.FC<{ children: ReactNode }> = ({
   }, []);
 
   return (
-    <VaultContext.Provider
+    <DarkvaultContext.Provider
       value={{
         state,
         dispatch,
@@ -674,7 +674,7 @@ export const VaultProvider: React.FC<{ children: ReactNode }> = ({
         withdraw,
         applyYield,
         transfer,
-        refreshVaultMetadata,
+        refreshDarkvaultMetadata,
         decryptBalance,
         fetchUserPositionHandle,
         fetchUserEscrowBalance,
@@ -690,14 +690,14 @@ export const VaultProvider: React.FC<{ children: ReactNode }> = ({
       }}
     >
       {children}
-    </VaultContext.Provider>
+    </DarkvaultContext.Provider>
   );
 };
 
-export const useVault = () => {
-  const context = useContext(VaultContext);
+export const useDarkvault = () => {
+  const context = useContext(DarkvaultContext);
   if (context === undefined) {
-    throw new Error('useVault must be used within a VaultProvider');
+    throw new Error('useDarkvault must be used within a DarkvaultProvider');
   }
   return context;
 };
