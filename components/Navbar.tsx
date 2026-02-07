@@ -1,5 +1,7 @@
 import React from 'react';
 import { useDarkvault } from '../context/DarkvaultContext';
+import logo from "../assets/logo.png";
+
 
 const Navbar: React.FC = () => {
   const { state, connectWallet, disconnectWallet, cluster, clusters, setCluster } = useDarkvault();
